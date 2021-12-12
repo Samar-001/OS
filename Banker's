@@ -1,0 +1,122 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    int processNo, resourceNo;
+    cout << "Enter number of processes: ";
+    cin >> processNo;
+    cout << "Enter number of resources: ";
+    cin >> resourceNo;
+    int *processes = new int[processNo];
+    for(int i = 0; i < processNo; i++)
+    {
+        processes[i] = 0;
+    }
+    int *allocation = new int[processNo*resourceNo];
+    int *max = new int[processNo*resourceNo];
+    int *need = new int[processNo*resourceNo];
+    int *available = new int[resourceNo];
+    int *result = new int[processNo];
+
+    cout << "Fill allocation matrix:\n";
+    for(int i = 0; i < processNo; i++)
+    {
+        for(int j = 0; j < resourceNo; j++)
+        {
+            cout << "Process " << i+1 << " Resource " << j+1 << " : ";
+            cin >> allocation[i*resourceNo + j];
+        }
+    }
+    cout << "Fill the max matrix:\n";
+    for(int i = 0; i < processNo; i++)
+    {
+        for(int j = 0; j < resourceNo; j++)
+        {
+            cout << "Process " << i+1 << " Resource " << j+1 << " : ";
+            cin >> max[i*resourceNo + j];
+        }
+    }
+    cout << "Enter available resources:\n";
+    for(int i = 0; i < resourceNo; i++)
+    {
+        cout << "Resource " << i+1 << " : ";
+        cin >> available[i];
+    }
+
+    for(int i = 0; i < processNo; i++)
+    {
+        for(int j = 0; j < resourceNo; j++)
+        {
+            need[i*resourceNo +j] = max[i*resourceNo +j] - allocation[i*resourceNo +j];
+        }
+    }
+    cout << "Need matrix is:\n";
+    for(int i = 0; i < processNo; i++)
+    {
+        for(int j = 0; j < resourceNo; j++)
+        {
+            cout << "Process " << i+1 << " Resource " << j+1 << " : " << need[i*resourceNo + j] << endl;
+        }
+    }
+    int i = 0;
+    int a = 0;
+    while(1)
+    {
+        int l = 0;
+        for(l = 0; l < processNo; l++)
+        {
+            if(processes[l] == 0)
+            {
+                break;
+            }
+        }
+        if(l == processNo)
+        {
+            break;
+        }
+        if(i == processNo)
+        {
+            i = 0;
+        }
+        if(processes[i] == 0)
+        {
+            int k;
+            for(k = 0; k < resourceNo; k++)
+            {
+                if(need[i*resourceNo + k] > available[k])
+                {
+                    break;
+                }
+            }
+            if(k != resourceNo)
+            {
+                i++;
+                continue;
+            }
+            else
+            {
+                for(k = 0; k < resourceNo; k++)
+                {
+                    available[k] += allocation[i*resourceNo + k];
+                }
+            }
+            result[a] = i;
+            processes[i] = 1;
+            a++;
+            i++;
+        }
+        else
+        {
+            i++;
+        }
+    }
+
+    cout << "Safe sequence is: ";
+    for(int x = 0; x < processNo; x++)
+    {
+        cout << result[x] << " ";
+    }
+    return 0;
+}
