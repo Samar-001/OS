@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n;
+	cout << "Enter the number of process : ";
+	cin >> n;
+	cout << endl;
+	int bt[25], wt[25], index[25], tat[25];
+	
+	cout << "Enter the burst time " << endl;
+	for(int i = 0; i < n; i++)
+	{
+		cout << "P" << i << " : ";
+		cin >> bt[i];
+		index[i] = i;
+	}
+	cout << endl;
+	
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < n; j++)
+		{
+			if(bt[i] < bt[j])
+			{
+				int temp = bt[i];
+				bt[i] = bt[j];
+				bt[j] = temp;
+				
+				int temp1 = index[i];
+				index[i] = index[j];
+				index[j] = temp1;
+			}
+		}
+	}
+	
+	wt[0] = 0;
+	for(int i = 1; i < n; i++)
+	{
+		wt[i] = 0;
+		for(int j = 0; j < i; j++)
+		{
+			wt[i] = wt[i] + bt[j];
+		}
+	}
+	float avg_wt = 0, avg_tat = 0;
+	for(int i = 0; i < n; i++)
+	{
+		tat[i] = wt[i] + bt[i];
+		avg_wt = avg_wt + wt[i];
+		avg_tat = avg_tat + tat[i];
+	}
+	
+	cout << "Process ID \t Burst Time\t Turnaround Time\t Waiting Time\t" << endl;
+	for(int i = 0; i < n; i++)
+	{
+		cout << "P" << index[i] <<"\t\t " << bt[i] << "\t\t " << tat[i] << "\t\t\t " << wt[i] << endl;
+	}
+	cout << endl << "Average Waiting Time : " << (avg_wt/n) << endl;
+	cout << "Average Turn Around Time : " << (avg_tat/n) << endl;
+	return 0;
+}
