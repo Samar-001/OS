@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+
+void seq(int* blocks, int nb, int len){
+    int count=0, s, e; 
+    for(int i=0; i<nb; i++){
+        if(blocks[i]==1) count=0;
+        else count++;
+        if(count==1) s=i;
+        if(count==len){
+            e=i;
+            break;
+        }
+    }
+    if(count==len) cout<<"The file is being allocated from :"<<s<<"-"<<e<<endl;
+    else cout<<"File not allocated\n";
+    
+}
+
+int main(){
+    int nb=500;
+    int blocks[nb];
+    for(int i=0; i<nb; i++) blocks[i]=0; // by default initialise all blocks as 0 i.e., empty
+    blocks[44]=1;
+    blocks[90]=1;
+    int len;
+    cout<<"Enter the file length : ";
+    cin>>len;
+    seq(blocks, nb, len);
+return 0;
+}
