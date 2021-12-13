@@ -1,0 +1,75 @@
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+#include<time.h>
+using namespace std;
+
+class node{
+    public:
+    int data;
+    node* next;
+    node(int data){
+        this->data=data;
+        next=NULL;
+    }
+};
+
+void createlist(node** head_ref, int data){
+    node* temp=new node(data);
+    if(*head_ref==NULL) *head_ref=temp;
+    else{
+        node* curr=*head_ref;
+        while(curr->next!=NULL) curr=curr->next;
+        curr->next=temp;
+    }
+}
+
+void display(node* head){
+    node* curr=head;
+    while(curr!=NULL){
+        cout<<curr->data<<"->";
+        curr=curr->next;
+    }
+    cout<<"NULL\n";
+}
+
+// int printRandoms(int lower, int upper, int count){
+//     int i;
+//     for (i = 0; i < count; i++) {
+//         int num = (rand() % (upper - lower + 1)) + lower;
+//         return num;
+//     }
+// }
+
+int main(){
+    int nb=50;
+    int block[nb];
+    for(int i=0; i<nb; i++) block[i]=0;
+    block[1]=block[5]=block[15]=block[21]=1;
+    int nf;
+    cout<<"Enter size of file : ";
+    cin>>nf;
+    int count=0;
+    node* head=NULL;
+    for(int i=0; i<nb; i++){
+        int num=(rand()%(nb-0+1))+0;  //int num = (rand() % (upper - lower + 1)) + lower;
+        if(block[num]==0){
+            createlist(&head, num);
+            block[num]=1;
+            count++;
+        }
+        if(count==nf) break;
+    } 
+
+    if(count==nf){
+        cout<<"File allocated :-\n";
+        display(head);
+        cout<<endl;
+    }
+    else{
+        cout<<"File not allocated.\n";
+    }
+   
+    
+return 0;
+}
