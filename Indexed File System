@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+int main(){
+    int nb=100;
+    int block[nb];
+    memset(block, 0, nb);
+    block[1]=block[5]=block[15]=block[21]=1;
+    int nf;
+    cout<<"Enter the size of file : ";
+    cin>>nf;
+    int ind[nf]; // ind will store the locations of blocks where file is present
+    int j=0, count=0;
+    for(int i=0; i<nb; i++){
+        if(block[i]==0){
+            ind[j]=i;
+            j++;
+            block[i]=1;
+            count++;
+        }
+        if(count==nf) break;
+    }
+    if(count==nf){
+        cout<<"File allocated.\nIndex Page :-\n";
+        for(int i=0; i<nf; i++) cout<<ind[i]<<" ";
+        cout<<endl;
+    }
+    else{
+        cout<<"File not allocated.\n";
+    }
+
+return 0;
+}
