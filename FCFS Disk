@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+void FCFS(int* req, int n, int cap){
+	int header=50;
+	int head_move=0;
+	vector<int> seek_seq;
+	for(int i=0; i<n; i++){
+		int d=abs(header-req[i]);
+		cout<<req[i]<<" has been accessed.\n";
+		int header=req[i];
+		head_move+=d;
+		seek_seq.push_back(req[i]);
+	}
+	cout<<"The seek seq is :\n";
+	for(auto it=seek_seq.begin(); it!=seek_seq.end(); it++) cout<<*it<<" ";
+
+}
+
+int main(){
+	int n=8;
+    int req[n]={176,79,34,60,92,11,41,114};
+	int cap=3; 
+    FCFS(req, n, cap);
+}
