@@ -1,0 +1,35 @@
+// shortest seek time first 
+#include<iostream>
+#include<climits>
+using namespace std;
+
+int absl(int x){
+    if(x<0) x=-x;
+    return x;
+}
+
+int main(){
+    int n=8;
+    int req[n]={176,79,34,60,92,11,41,114};  
+    int header=50; // assumed started from 50
+    int head_move=0; // initial distance is 0
+    int count=0;
+    int d;
+    int index;
+    while(count!=n){
+        int min=10000;
+        for(int i=0;i<n;i++){
+            d=absl(header-req[i]);
+            if(min>d) {
+                min=d;
+                index=i;
+            } // min seek distance
+        }
+        cout <<req[index]<<" has been allocated\n";
+        header=req[index];  //update header
+        head_move+=min; // haeder  movement
+        req[index]=INT_MAX; 
+        count++;
+    }
+    cout<<"The total header movement is :"<<head_move<<endl;
+}
